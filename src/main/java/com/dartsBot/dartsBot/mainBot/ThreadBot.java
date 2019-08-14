@@ -82,6 +82,7 @@ public class ThreadBot extends Thread {
                 } else throw new DartsExceptions(DartsErrors.WRONG_PLAYERS_COUNT);
             } else if (request.split(" ").length != 4){ throw new DartsExceptions(DartsErrors.WRONG_NAME_SYMBOLS); }
         }
+        response.setReplyMarkup(keyBoard(Collections.singletonList("/StopGame")));
         return response;
     }
 

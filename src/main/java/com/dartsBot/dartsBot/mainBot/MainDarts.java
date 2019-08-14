@@ -24,18 +24,6 @@ public class MainDarts extends TelegramLongPollingBot {
     @Autowired
     private MatchRepository matchRepo;
 
-//    private static DefaultBotOptions setOptions(){
-//        DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
-//        botOptions.setProxyHost("45.13.30.144");
-//        botOptions.setProxyPort(60079);
-//        botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
-//        return botOptions;
-//    }
-//
-//    public MainDarts(){
-//        super(setOptions());
-//    }
-
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
@@ -52,3 +40,17 @@ public class MainDarts extends TelegramLongPollingBot {
         }
     }
 }
+
+
+//--------------for using in Russia--------------------------------------------
+//    private static DefaultBotOptions setOptions(){
+//        DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
+//        botOptions.setProxyHost("45.13.30.144");
+//        botOptions.setProxyPort(60079);
+//        botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
+//        return botOptions;
+//    }
+//
+//    public MainDarts(){
+//        super(setOptions());
+//    }
