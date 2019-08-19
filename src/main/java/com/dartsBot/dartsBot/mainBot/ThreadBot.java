@@ -23,7 +23,7 @@ public class ThreadBot extends Thread {
     private MainDarts mainDarts;
     private Update update;
     private Message message;
-    private static final String regexNum = "\\d+";
+    private static final String regexNum = "-?\\d+";
     private static final String regexLetters = "[\\sa-zA-Zа-яА-ЯёЁ]+";
 
     public ThreadBot(Update update, MatchRepository matchRepo, MainDarts mainDarts) {
@@ -45,7 +45,7 @@ public class ThreadBot extends Thread {
                 case "/NewGame":
                     response = formMessage(message, "Введите имена игроков через пробел", response);
                     break;
-                case "/StopGame":
+                case "/stop":
                     response.setReplyMarkup(keyBoard(Collections.singletonList("/NewGame")));
                     response = stopGame(message, response);
                     break;
@@ -68,7 +68,7 @@ public class ThreadBot extends Thread {
             if (request.matches(regexLetters)) {
                 if (request.split(" ").length == 2) {
                     response = createNewGame(update);
-                    response.setReplyMarkup(keyBoard(Collections.singletonList("/StopGame")));
+                    response.setReplyMarkup(keyBoard(Collections.singletonList("/stop"))); //------
                 } else throw new DartsExceptions(DartsErrors.WRONG_PLAYERS_COUNT);
             } else throw new DartsExceptions(DartsErrors.WRONG_NAME_SYMBOLS);
         } else {
@@ -82,7 +82,7 @@ public class ThreadBot extends Thread {
                 } else throw new DartsExceptions(DartsErrors.WRONG_PLAYERS_COUNT);
             } else if (request.split(" ").length != 4){ throw new DartsExceptions(DartsErrors.WRONG_NAME_SYMBOLS); }
         }
-        response.setReplyMarkup(keyBoard(Collections.singletonList("/StopGame")));
+        response.setReplyMarkup(keyBoard(Collections.singletonList("/stop")));  ///------
         return response;
     }
 
@@ -114,8 +114,11 @@ public class ThreadBot extends Thread {
             if (match.getPlayer1points() == 0) {
                 match.setPlayer1Score(match.getPlayer1Score() + 1);
                 match.setPlayer1points(301);
+                match.setPlayer2points(301);
             }
             if (match.getPlayer1points() < 0)
+                match.setPlayer1points(buf);
+            if (match.getPlayer1points() > 301)
                 match.setPlayer1points(buf);
         }
         if (match.getPlayer2Name().startsWith(pref)) {
@@ -124,8 +127,11 @@ public class ThreadBot extends Thread {
             if (match.getPlayer2points() == 0) {
                 match.setPlayer2Score(match.getPlayer2Score() + 1);
                 match.setPlayer2points(301);
+                match.setPlayer1points(301);
             }
             if (match.getPlayer2points() < 0)
+                match.setPlayer2points(buf);
+            if (match.getPlayer2points() > 301)
                 match.setPlayer2points(buf);
         }
         return match;
